@@ -15,7 +15,7 @@ function DiagramViewer({ xml, onXmlChange }) {
 
     iframe.contentWindow.postMessage(
       JSON.stringify({ action: "load", xml: diagramXml }),
-      "https://embed.diagrams.net"
+      "http://localhost:8080"
     )
   }, [])
 
@@ -28,7 +28,7 @@ function DiagramViewer({ xml, onXmlChange }) {
 
   useEffect(() => {
     const handleMessage = (event) => {
-      if (event.origin !== "https://embed.diagrams.net") return
+      if (event.origin !== "http://localhost:8080") return
 
       let msg = event.data
       if (typeof msg === "string") {
@@ -78,7 +78,7 @@ function DiagramViewer({ xml, onXmlChange }) {
       <iframe
         ref={iframeRef}
         title="draw.io editor"
-        src="https://embed.diagrams.net/?embed=1&ui=atlas&spin=1&proto=json&libraries=1&saveAndExit=0&noSaveBtn=0&noExitBtn=1&modified=0"
+        src="http://localhost:8080/?embed=1&ui=atlas&spin=1&proto=json&libraries=1&saveAndExit=0&noSaveBtn=0&noExitBtn=1&modified=0"
         style={{ width: "100%", height: "100%", border: "none", background: "#fff" }}
       />
       {error && (
@@ -180,7 +180,7 @@ export default function App() {
   const openInDrawio = () => {
     if (!currentXml) return
     const encoded = encodeURIComponent(currentXml)
-    window.open(`https://embed.diagrams.net/?embed=1&ui=atlas&spin=1&proto=json&libraries=1&src=data:text/xml,${encoded}`, "_blank")
+    window.open(`http://localhost:8080/?embed=1&ui=atlas&spin=1&proto=json&libraries=1&src=data:text/xml,${encoded}`, "_blank")
   }
 
   const copyXml = () => {
